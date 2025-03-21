@@ -9,9 +9,30 @@
 <p>Aí surge uma pergunta: como isso é possível? Bom, isso é o resultado da junção de Open File Format e Open Table Format. Essa dupla combina um armazenamento eficiente e flexível (considerando que os Open File Format comprimem os dados e aceitam dados estruturados ou não) com funcionalidades de transação, versionamento e governança fornecidas pelo Open Table Format.</p>
 
 <h2>Open Table Format</h2>
+(o que é um formato de tabela -> depois falar sobre o open format) (dar exemplos de outros tipos além do iceberg)
+
+<h2>Open File Format</h2>
   
 <h2>Apache Iceberg</h2>
 
-<h3>Históriat</h3>
+<p>Finalmente, chegamos à resposta sobre o que é o Iceberg.</p>
+
+<p>Ele nada mais é do que um formato de tabela, portanto, não oferece armazenamento, sendo do tipo Open Table Format. Assim, garantindo transações consistentes com propriedades ACID e, junto com o isolamento de snapshots (adicionar um link que leva para a explicação do conceito) pontuais, tem a possibilidade de diferentes serviços alterarem os dados de uma mesma partição simultaneamente, desde que não haja conflito.</p>
+<p>O Iceberg, além de ser 100% código aberto, é integrado com o SQL, trazendo simplicidade nas operações do dia a dia, ademais, é bem flexível em questões de usabilidade rotineira, pois aceita várias tecnologias e bibliotecas (como, por exemplo: Spark, Trino, Impala, Snowflake, Presto, etc.). Essa variedade também ajuda em outra funcionalidade: a migração de tipo de tabela, a qual ocorre através de cópias dos arquivos de metadados originais ou reutilizando-os e apenas criando os novos arquivos no formato Iceberg.</p>
+<p>Além disso, esse formato de tabela conta com mais algumas características:</p>
+<ul>
+  <li>Partição "escondida"</li>
+  <p>O usuário não precisa lidar com o particionamento dos dados, pois o próprio Iceberg já faz isso por trás dos panos.</p>
+  <li>Evolução do schema</li>
+  <p>O Iceberg permite que as colunas sejam alteradas sem risco de prejudicar os dados, pois somente os arquivos de metadados são atualizados, desta forma, assegurando a consistência dos dados ao mesmo tempo que permite o crescimento do schema.</p>
+  <li>Histórico de ações</li>
+  <p>Os snapshots permanecem guardados mesmo depois de terem sido substituídos por outros snapshots mais atuais, fazendo um versionamento de dados e disponibilizando consultas às formas antigas dos dados e da tabela.</p>
+  <li>Processamento incremental</li>
+  <p>Somente os dados de uma última execução são processados, consequentemente, economizando processamento e memória.</p>
+  <li>Filtragem de partições</li>
+  <p>O Iceberg otimiza as consultas através da omissão de dados desnecessários no contexto da consulta e da filtragem de partições, selecionando apenas o que é relevantes. Além disso, sua arquitetura de metadados otimizados contribui otimizando o desempenho das pesquisas.</p>
+</ul>
+
+<h3>História</h3>
 
 <h3>Arquitetura</h3>
