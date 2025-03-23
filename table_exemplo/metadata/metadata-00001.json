@@ -44,6 +44,12 @@
       "timestamp-ms": 1742659200000,
       "operation": "create",
       "manifest-list": null
+    },
+    {
+      "snapshot-id": 2,
+      "timestamp-ms": 1742659300000,
+      "operation": "append",
+      "manifest-list": "s3://bucket/tabela/metadata/manifest-lists/manifest-list-00002.avro"
     }
   ],
   "current-snapshot-id": 1
