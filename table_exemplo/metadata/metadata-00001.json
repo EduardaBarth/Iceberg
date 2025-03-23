@@ -1,0 +1,50 @@
+{
+  "format-version": 2,
+  "table-uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "location": "s3://bucket/tabela/",
+  "last-updated-ms": 1742659200000,
+  "last-column-id": 4,
+  "schemas": [
+    {
+      "schema-id": 1,
+      "fields": [
+        {
+          "id": 1,
+          "name": "id",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "id": 2,
+          "name": "nome",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "id": 3,
+          "name": "idade",
+          "type": "integer",
+          "nullable": true
+        },
+        {
+          "id": 4,
+          "name": "data_criacao",
+          "type": "timestamp",
+          "nullable": false
+        }
+      ]
+    }
+  ],
+  "current-schema-id": 1,
+  "partition-specs": [],
+  "default-spec-id": 0,
+  "snapshots": [
+    {
+      "snapshot-id": 1,
+      "timestamp-ms": 1742659200000,
+      "operation": "create",
+      "manifest-list": null
+    }
+  ],
+  "current-snapshot-id": 1
+}

@@ -1,0 +1,13 @@
+{
+  "snapshot-id": 3,
+  "parent-snapshot-id": 2,
+  "sequence-number": 3,
+  "timestamp-ms": 1742659500000,
+  "operation": "merge",
+  "summary": {
+    "operation": "merge-data",
+    "row-count": 2000,
+    "file-count": 2
+  },
+  "manifest-list": "s3://bucket/tabela/metadata/manifest-list-00003.avro"
+}

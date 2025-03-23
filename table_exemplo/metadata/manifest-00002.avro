@@ -1,0 +1,20 @@
+{
+  "manifest-id": 2,
+  "snapshot-id": 2,
+  "added-files": [
+    {
+      "file-path": "s3://bucket/tabela/data/part-00000.parquet",
+      "file-format": "parquet",
+      "record-count": 1000,
+      "file-size-in-bytes": 1048576,
+      "lower-bound": {
+        "id": 1
+      },
+      "upper-bound": {
+        "id": 1000
+      }
+    }
+  ],
+  "existing-files": [],
+  "deleted-files": []
+}

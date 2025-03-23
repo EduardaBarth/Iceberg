@@ -1,0 +1,12 @@
+{
+  "snapshot-id": 2,
+  "manifest-files": [
+    {
+      "manifest-path": "s3://bucket/tabela/metadata/manifest-00002.avro",
+      "manifest-length": 12345,
+      "added-files-count": 1,
+      "existing-files-count": 0,
+      "deleted-files-count": 0
+    }
+  ]
+}

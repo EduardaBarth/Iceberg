@@ -1,0 +1,42 @@
+{
+  "snapshot-id": 1,
+  "parent-snapshot-id": null,
+  "sequence-number": 1,
+  "timestamp-ms": 1742659200000,
+  "operation": "create",
+  "summary": {
+    "operation": "create-table",
+    "row-count": 0,
+    "file-count": 0
+  },
+  "manifest-list": null,
+  "schema": {
+    "schema-id": 1,
+    "fields": [
+      {
+        "id": 1,
+        "name": "id",
+        "type": "integer",
+        "nullable": false
+      },
+      {
+        "id": 2,
+        "name": "nome",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "id": 3,
+        "name": "idade",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "id": 4,
+        "name": "data_criacao",
+        "type": "timestamp",
+        "nullable": false
+      }
+    ]
+  }
+}
