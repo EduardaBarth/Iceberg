@@ -39,14 +39,14 @@
 <p>Primeiramente, é importante saber que ele é dividido em três camadas:</p>
 <ul>
   <li>Catálogo</li>
-  <p>É a parte que armazena as informações de todas as tabelas, precisa de alguma tecnologia externa para guardar os metadados e ele sempre "aponta" para o último metadado criado.</p>
+  <p>É a parte que armazena as informações de todas as tabelas, precisa de alguma tecnologia externa para guardar os metadados e ele sempre faz referência ao último metadado criado, é por causa dessa camada que o iceberg suporta operações atômicas..</p>
   <li>Metadados</li>
-  <p>Essa camada contem tudo sobre uma tabela em específico, como quais as colunas, seus tipo, quantidade, partições, versões, últimas alterações, etc. Também é dividida em outras três sub camadas.</p>
+  <p>Essa camada contém tudo sobre uma tabela em específico, como quais as colunas, seus tipo, quantidade, partições, versões, últimas alterações, etc. Também é dividida em outras três sub camadas.</p>
   <ul>
     <li>Arquivo de metadados</li>
-    <p>Contém um ou mais snapshots, assim, um catálogo "aponta" para uma camada de metadados e esses para vários snapshots</p>
+    <p>Contém um ou mais snapshots, assim, um catálogo armazena a localização para um arquivo de metadados (metadata file) e esse para um ou vários snapshots. Nesse arquivo json podemos encontrar detalhes sobre o schema da tabela, informação sobre partição, id do snapshot atual (current-snapshot-id), o caminho para a lista de manifesto (manifest list), etc.</p>
     <li>Arquivo com listas de manifestos</li>
-    <p>Cada snapshot "aponta" para um arquivo que contém listas com as informações sobre a localização de um manifesto e as partições dos dados.</p>
+    <p>Cada snapshot têm um ou mais arquivos manifesto (manifest-file) e esse arquivo .avro contém, em formato de lista, as informações sobre a localização de um manifesto.</p>
     <li>Arquivo manifesto</li>
     <p>Por fim, esse arquivo contém uma lista com a localização para os arquivos que contém os dados de sua espectiva partição.</p>
   </ul>
@@ -57,6 +57,8 @@
 <h4>Explicando a imagem</h4>
 <img src="assets/iceberg_arquitetura_exemplo.png" />
 <p><sup>Saha, Dipankar, Disruptor in Data Engineering - Comprehensive Review of Apache Iceberg, Disponível em: <a href="https://ssrn.com/abstract=4987315" target="_blank">SSRN</a> ou <a href="http://dx.doi.org/10.2139/ssrn.4987315" target="_blank">DOI</a></sup></p>
-<p>O catálogo tem duas tabelas, então falando sobre a table-1 primeiro: por só ter um snapshot, essa tabela só tem um metadata file que está sendo referenciado no catálogo; esse snapshot é o estado atual da tabela-1 e tem um manifest-list com somente um manifest file, uma partição. A segunda tabela teve alguma atualização, então o metadata file contendo somente o snapshot antigo é deletado e um novo metadata file é criado, com o snapshot antigo e um snapshot da table-2 atual, após a atualização; O snapshot antigo permanece mapiando o manifest list, conseguentemente o manifest file e os dados que ele já mapeava antes e o novo snapshot mapea um novo manifest-list, o qual contempla três manifest-file (três partições), cada um com a localização para seus arquivos com os dados.</p>
+<p>O catálogo tem duas tabelas, então falando sobre a table-1 primeiro: por só ter um snapshot, essa tabela só tem um metadata file que está sendo referenciado no catálogo; esse snapshot é o estado atual da tabela-1 e tem um manifest-list com somente um manifest file, uma partição. A segunda tabela teve alguma atualização, então o catálogo é atualizado para referenciar esse novo metadata file que é criado, com o snapshot antigo e um snapshot da table-2 atual, após a atualização; O snapshot antigo permanece mapiando o manifest list, conseguentemente o manifest file e os dados que ele já mapeava antes e o novo snapshot mapea um novo manifest-list, o qual contempla três manifest-file, cada um com a localização para seus arquivos com os dados.</p>
 <p>É desta forma que o Iceberg concegue criar as patições sem a participação do usuário e atualizar o schema da tabela sem mexer nos dados.</p>
 
+<h4>Um exemplo prático</h4>
+<p>Ao criar uma tabela, um <a href="table_exemplo/metadata/metadata-00001.json">metada file</a> é criado também com um <a href="table_exemplo/metadata/snapshots/00000000000000000001.json">snapshot (spt0)</a> do estado atual da tabela, ou seja, com ela vazia. Logo em seguida, fazemos o primeiro insert na tabela, então é adicionado um novo <a href="table_exemplo/metadata/snapshots/00000000000000000002.json">snapshot (spt2)</a> no metadada e também é criado um <a href="table_exemplo/metadata/manifest-lists/manifest-list-00002.avro">manifest-list</a> com um <a href="table_exemplo/metadata/manifest-00002.avro">manifest file</a> e os arquivos de dados. Por último, vamos fazer um merge com novos dados: cria-se um novo <a href="table_exemplo/metadata/metadata-00003.json">metada file</a> contendo os últimos dois snapshots mais o <a href="table_exemplo/metadata/snapshots/00000000000000000003.json">atual (spt3)</a>. O spt2 permanece guardando informações sobre o seu manifest-list de quando ele foi criado e o spt3 contém um novo <a href="table_exemplo/metadata/manifest-lists/manifest-list-00003.avro">manifest-list</a>.</p>
