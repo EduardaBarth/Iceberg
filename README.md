@@ -33,8 +33,6 @@
   <p>O Iceberg otimiza as consultas através da omissão de dados desnecessários no contexto da consulta e da filtragem de partições, selecionando apenas o que é relevantes. Além disso, sua arquitetura de metadados otimizados contribui otimizando o desempenho das pesquisas.</p>
 </ul>
 
-<h3>História</h3>
-
 <h3>Arquitetura</h3>
 
 <p>Agora vamos entender um pouco sobre como o Iceberg consegue fazer isso?</p>
@@ -50,8 +48,15 @@
     <li>Arquivo com listas de manifestos</li>
     <p>Cada snapshot "aponta" para um arquivo que contém listas com as informações sobre a localização de um manifesto e as partições dos dados.</p>
     <li>Arquivo manifesto</li>
-    <p>Por fim, esse arquivo contém uma lista com a localização para os arquivos que conteém os dados de sua espectiva partição.</p>
+    <p>Por fim, esse arquivo contém uma lista com a localização para os arquivos que contém os dados de sua espectiva partição.</p>
   </ul>
   <li>Dados</li>
   <p>A última camada é onde estão os dados em si, em um Open File Format</p>
 </ul>
+
+<h4>Explicando a imagem</h4>
+<img src="assets/iceberg_arquitetura_exemplo.png" />
+<p><sup>Saha, Dipankar, Disruptor in Data Engineering - Comprehensive Review of Apache Iceberg, Disponível em: <a href="https://ssrn.com/abstract=4987315" target="_blank">SSRN</a> ou <a href="http://dx.doi.org/10.2139/ssrn.4987315" target="_blank">DOI</a></sup></p>
+<p>O catálogo tem duas tabelas, então falando sobre a table-1 primeiro: por só ter um snapshot, essa tabela só tem um metadata file que está sendo referenciado no catálogo; esse snapshot é o estado atual da tabela-1 e tem um manifest-list com somente um manifest file, uma partição. A segunda tabela teve alguma atualização, então o metadata file contendo somente o snapshot antigo é deletado e um novo metadata file é criado, com o snapshot antigo e um snapshot da table-2 atual, após a atualização; O snapshot antigo permanece mapiando o manifest list, conseguentemente o manifest file e os dados que ele já mapeava antes e o novo snapshot mapea um novo manifest-list, o qual contempla três manifest-file (três partições), cada um com a localização para seus arquivos com os dados.</p>
+<p>É desta forma que o Iceberg concegue criar as patições sem a participação do usuário e atualizar o schema da tabela sem mexer nos dados.</p>
+
