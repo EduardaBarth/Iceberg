@@ -17,7 +17,7 @@
 
 <p>Finalmente, chegamos à resposta sobre o que é o Iceberg.</p>
 
-<p>Ele nada mais é do que um formato de tabela, portanto, não oferece armazenamento, sendo do tipo Open Table Format. Assim, garantindo transações consistentes com propriedades ACID e, junto com o isolamento de snapshots (adicionar um link que leva para a explicação do conceito) pontuais, tem a possibilidade de diferentes serviços alterarem os dados de uma mesma partição simultaneamente, desde que não haja conflito.</p>
+<p>Ele nada mais é do que um formato de tabela, portanto, não oferece armazenamento, sendo do tipo Open Table Format. Assim, garantindo transações consistentes com propriedades ACID e, junto com o isolamento de snapshots (visualizações pontuais do estado atual de uma tabela), tem a possibilidade de diferentes serviços alterarem os dados de uma mesma partição simultaneamente, desde que não haja conflito.</p>
 <p>O Iceberg, além de ser 100% código aberto, é integrado com o SQL, trazendo simplicidade nas operações do dia a dia, ademais, é bem flexível em questões de usabilidade rotineira, pois aceita várias tecnologias e bibliotecas (como, por exemplo: Spark, Trino, Impala, Snowflake, Presto, etc.). Essa variedade também ajuda em outra funcionalidade: a migração de tipo de tabela, a qual ocorre através de cópias dos arquivos de metadados originais ou reutilizando-os e apenas criando os novos arquivos no formato Iceberg.</p>
 <p>Além disso, esse formato de tabela conta com mais algumas características:</p>
 <ul>
@@ -36,3 +36,22 @@
 <h3>História</h3>
 
 <h3>Arquitetura</h3>
+
+<p>Agora vamos entender um pouco sobre como o Iceberg consegue fazer isso?</p>
+<p>Primeiramente, é importante saber que ele é dividido em três camadas:</p>
+<ul>
+  <li>Catálogo</li>
+  <p>É a parte que armazena as informações de todas as tabelas, precisa de alguma tecnologia externa para guardar os metadados e ele sempre "aponta" para o último metadado criado.</p>
+  <li>Metadados</li>
+  <p>Essa camada contem tudo sobre uma tabela em específico, como quais as colunas, seus tipo, quantidade, partições, versões, últimas alterações, etc. Também é dividida em outras três sub camadas.</p>
+  <ul>
+    <li>Arquivo de metadados</li>
+    <p>Contém um ou mais snapshots, assim, um catálogo "aponta" para uma camada de metadados e esses para vários snapshots</p>
+    <li>Arquivo com listas de manifestos</li>
+    <p>Cada snapshot "aponta" para um arquivo que contém listas com as informações sobre a localização de um manifesto e as partições dos dados.</p>
+    <li>Arquivo manifesto</li>
+    <p>Por fim, esse arquivo contém uma lista com a localização para os arquivos que conteém os dados de sua espectiva partição.</p>
+  </ul>
+  <li>Dados</li>
+  <p>A última camada é onde estão os dados em si, em um Open File Format</p>
+</ul>
