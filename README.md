@@ -8,10 +8,13 @@
 <p>Assim nasceu o Data Lakehouse, uma junção desses dois sistemas de armazenamento de dados. Ou seja, traz as propriedades ACID e a qualidade do Data Warehouse, ao mesmo tempo que tem baixos custos, aceita vários formatos de dados e possui a interoperabilidade do Data Lake. Além disso, essa arquitetura também suporta versionamento, possui um histórico que pode gerar relatórios e permite que diferentes processos podem utilizar os mesmos dados.</p>
 <p>Aí surge uma pergunta: como isso é possível? Bom, isso é o resultado da junção de Open File Format e Open Table Format. Essa dupla combina um armazenamento eficiente e flexível (considerando que os Open File Format comprimem os dados e aceitam dados estruturados ou não) com funcionalidades de transação, versionamento e governança fornecidas pelo Open Table Format.</p>
 
-<h2>Open Table Format</h2>
-(o que é um formato de tabela -> depois falar sobre o open format) (dar exemplos de outros tipos além do iceberg)
-
 <h2>Open File Format</h2>
+
+<h2>Open Table Format</h2>
+
+<p>Um formato de tabela é um intermediário que define e organiza um conjunto de dados de uma forma mais fácil de vizualizar, entender e trabalhar com esses dados, ou seja, em um formato tabular.</p>
+<p>Dessa maneira, um formato de tabela aberto (Open Table Format) se diferencia dos outros por ter uma camada de metadados, os quais são responsáveis por ter informações sobre os arquivos de dados abertos (Open File Format). Além disso, sempre que há uma requisição de alteração, o Open Table Format cria um novo arquivo com a mudança e deixa o arquivo original intacto. Então, esse formato extrai a estrutura da tabela dos dados através dos metadados e cria um histórico de alterações nos dados ao criar novos arquivos e armazenar os antigos, assim, consegue promover transações ACID, CRUD, evolução dos schemas, histórico e melhora a performace de queries e novas escritas.</p>
+<p>Alguns exemplos mais comuns de Open Format Table são: Iceberg, Delta Lake, Hudi</p>
   
 <h2>Apache Iceberg</h2>
 
