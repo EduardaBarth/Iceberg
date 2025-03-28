@@ -10,13 +10,13 @@
 
 <h2>Open File Format</h2>
 
-<p align="justify">Com o crescimento do big data, iniciou-se uma busca por reduzir gastos com armazenamento e melhorar a eficiência dos acessos aos dados, assim nasceu os Open File Formats. Esse formato de arquivo possui dois tipos de orientação: por linha, tradicionais em DBMS; e por coluna, mais recentes e introducidos para lidar com altas performaces. Além disso, ele fornece menos gastos com infraestrutura, pois tem um modelo compressivo, o qual gera um armazenamento mais eficiente comparado a outros formatos de arquivos, também é interoperável, já que existem diversas tecnologias que aceitam e trabalham com Open File Formats, e mantém os dados integrados, reduzindo possíveis inconsistências neles.
+<p align="justify">Com o crescimento do Big Data, tornou-se essencial reduzir custos com armazenamento e melhorar a eficiência no processamento de grandes volumes de dados. Assim, surgiram os Open File Formats, formatos de arquivos abertos que permitem maior interoperabilidade e desempenho em análise de dados. Eles podem ser orientados por linha, como em bancos de dados tradicionais (DBMS), ou orientados por coluna, como Parquet e ORC, que oferecem maior eficiência para consultas analíticas. Além disso, esses formatos frequentemente utilizam compressão eficiente, reduzindo o espaço de armazenamento sem comprometer o desempenho.</p>
 
 <h2>Open Table Format</h2>
 
 <p align="justify">Um formato de tabela é um intermediário que define e organiza um conjunto de dados de uma forma mais fácil de vizualizar, entender e trabalhar com esses dados, ou seja, em um formato tabular.</p>
-<p>Dessa maneira, um formato de tabela aberto (Open Table Format) se diferencia dos outros por ter uma camada de metadados, os quais são responsáveis por ter informações sobre os arquivos de dados abertos (Open File Format). Além disso, sempre que há uma requisição de alteração, o Open Table Format cria um novo arquivo com a mudança e deixa o arquivo original intacto. Então, um Open Table Format extrai a estrutura da tabela através dos metadados e cria um histórico de alterações nos dados ao criar novos arquivos e armazenar os antigos, assim, consegue promover transações ACID, CRUD, evolução dos schemas e melhora a performace de queries e novas escritas.</p>
-<p align="justify">Alguns exemplos mais comuns de Open Format Table são: Iceberg, Delta Lake, Hudi.</p>
+<p>Dessa maneira, um formato de tabela aberto (Open Table Format) se diferencia dos outros por ter uma camada de metadados, os quais são responsáveis por ter informações sobre os arquivos de dados abertos (Open File Format). Além disso, sempre que há uma requisição de alteração, o Open Table Format cria um novo arquivo com a mudança e deixa o arquivo original intacto, criando um versionamento e ajudando no controle transacional. Então, um Open Table Format extrai a estrutura da tabela através dos metadados e cria um histórico de alterações nos dados ao criar novos arquivos e armazenar os antigos, assim, consegue promover transações ACID, CRUD, evolução dos schemas, particionamento e melhora a performace de queries e novas escritas.</p>
+<p align="justify">Alguns exemplos mais comuns de Open Table Format são: Iceberg, Delta Lake, Hudi.</p>
   
 <h2>Apache Iceberg</h2>
 
