@@ -5,7 +5,7 @@
 <p align="justify">O Iceberg é especialmente útil na arquitetura Data Lakehouse, assim, é fundamental entender esse conceito e, como o próprio nome diz, é uma junção de outras duas arquiteturas: o Data Lake e o Data Warehouse. Então, vamos ver um pouco sobre cada uma.</p>
 <p align="justify">O Data Warehouse garante a qualidade dos dados e escalabilidade com seu sistema de armazenamento indexado e particionado, porém, por só permitir dados estruturados, acaba sendo muito custoso e pouco flexível.</p>
 <p align="justify">Por outro lado, o Data Lake é um armazenamento que permite diferentes tipos de formatos de arquivos, trazendo consigo uma melhora no desempenho de consulta, além dos benefícios da interoperabilidade. Contudo, ele não consegue garantir a qualidade dos dados nem dá suporte a transações ACID.</p>
-<p align="justify">Assim nasceu o Data Lakehouse, uma junção desses dois sistemas de armazenamento de dados. Ou seja, traz as propriedades ACID e a qualidade do Data Warehouse, ao mesmo tempo que tem baixos custos, aceita vários formatos de dados e possui a interoperabilidade do Data Lake. Além disso, essa arquitetura também suporta versionamento, possui um histórico que pode gerar relatórios e permite que diferentes processos podem utilizar os mesmos dados.</p>
+<p align="justify">Assim nasceu o Data Lakehouse, uma junção desses dois sistemas de armazenamento de dados. Ou seja, traz as propriedades ACID e a qualidade do Data Warehouse, ao mesmo tempo que tem baixos custos, aceita vários formatos de dados e possui a interoperabilidade do Data Lake. Além disso, essa arquitetura também suporta versionamento, possui um histórico que pode gerar relatórios e permite que diferentes processos utilizem os mesmos dados.</p>
 <p align="justify">Aí surge uma pergunta: como isso é possível? Bom, isso é o resultado da junção de Open File Format e Open Table Format. Essa dupla combina um armazenamento eficiente e flexível (considerando que os Open File Format comprimem os dados e aceitam dados estruturados ou não) com funcionalidades de transação, versionamento e governança fornecidas pelo Open Table Format.</p>
 
 <h2>Open File Format</h2>
@@ -23,7 +23,7 @@
 <p align="justify">Finalmente, chegamos à resposta sobre o que é o Iceberg.</p>
 
 <p align="justify">Ele nada mais é do que um formato de tabela, portanto, não oferece armazenamento, sendo do tipo Open Table Format. Assim, garantindo transações consistentes com propriedades ACID e, junto com o isolamento de snapshots (visualizações pontuais do estado atual de uma tabela), tem a possibilidade de diferentes serviços alterarem os dados de uma mesma partição simultaneamente, desde que não haja conflito.</p>
-<p align="justify">O Iceberg, além de ser 100% código aberto, é integrado com o SQL, trazendo simplicidade nas operações do dia a dia, ademais, é bem flexível em questões de usabilidade rotineira, pois aceita várias tecnologias e bibliotecas (como, por exemplo: Spark, Trino, Impala, Snowflake, Presto, etc.). Essa variedade também ajuda em outra funcionalidade: a migração de tipo de tabela, a qual ocorre através de cópias dos arquivos de metadados originais ou reutilizando-os e apenas criando os novos arquivos no formato Iceberg.</p>
+<p align="justify">O Iceberg, além de ser 100% código aberto, é integrado com o SQL, trazendo simplicidade nas operações do dia a dia, ademais, é bem flexível em questões de usabilidade rotineira, pois aceita várias tecnologias e bibliotecas (por exemplo: Spark, Trino, Impala, Snowflake, Presto, etc.). Essa variedade também ajuda em outra funcionalidade: a migração de tipo de tabela, a qual ocorre através de cópias dos arquivos de metadados originais ou reutilizando-os e apenas criando os novos arquivos no formato Iceberg.</p>
 <p align="justify">Além disso, esse formato de tabela conta com mais algumas características:</p>
 <ul>
   <li>Partição "escondida"</li>
@@ -35,25 +35,25 @@
   <li>Processamento incremental</li>
   <p align="justify">Somente os dados de uma última execução são processados, consequentemente, economizando processamento e memória.</p>
   <li>Filtragem de partições</li>
-  <p align="justify">O Iceberg otimiza as consultas através da omissão de dados desnecessários no contexto da consulta e da filtragem de partições, selecionando apenas o que é relevantes. Além disso, sua arquitetura de metadados otimizados contribui otimizando o desempenho das pesquisas.</p>
+  <p align="justify">O Iceberg otimiza as consultas através da omissão de dados desnecessários no contexto da consulta e da filtragem de partições, selecionando apenas o que é relevantes. Além disso, sua arquitetura de metadados contribui otimizando o desempenho das pesquisas.</p>
 </ul>
 
 <h3>Arquitetura</h3>
 
-<p align="justify">Agora vamos entender um pouco sobre como o Iceberg consegue fazer isso?</p>
+<p align="justify">Agora vamos entender um pouco sobre como o Iceberg consegue fazer isso.</p>
 <p align="justify">Primeiramente, é importante saber que ele é dividido em três camadas:</p>
 <ul>
   <li>Catálogo</li>
-  <p align="justify">O catálogo é responsável por rastrear a localização do arquivo de metadados mais recente, permitindo consultas consistentes e operações transacionais. Ele pode ser integrado a tecnologias externas como Hive Metastore, AWS Glue, ou JDBC-compatible catalogs.</p>
+  <p align="justify">O catálogo é responsável por rastrear a localização do arquivo de metadados mais recente, permitindo consultas consistentes e operações transacionais. Ele pode ser integrado a tecnologias externas como Hive Metastore, AWS Glue ou JDBC-compatible catalogs.</p>
   <li>Metadados</li>
-  <p align="justify">Essa camada contém tudo sobre uma tabela em específico, como quais as colunas, seus tipo, quantidade, partições, versões, últimas alterações, etc. Também é dividida em outras três sub camadas.</p>
+  <p align="justify">Essa camada contém tudo sobre uma tabela em específico, como quais as colunas, seus tipos, partições, versões, últimas alterações, etc. Também é dividida em outras três sub camadas.</p>
   <ul>
     <li>Arquivo de metadados</li>
     <p align="justify">Contém um ou mais snapshots, assim, um catálogo armazena a localização para um arquivo de metadados (metadata file) e esse para um ou vários snapshots. Nesse arquivo json podemos encontrar detalhes sobre o schema da tabela, informação sobre partição, id do snapshot atual (current-snapshot-id), o caminho para a lista de manifesto (manifest list), etc.</p>
     <li>Arquivo com listas de manifestos</li>
     <p align="justify">Cada snapshot têm um ou mais arquivos manifesto (manifest-file) e esse arquivo .avro contém as informações sobre a localização de um ou vários arquivos manifesto.</p>
     <li>Arquivo manifesto</li>
-    <p align="justify">Por fim, esse arquivo lista os arquivos de dados dentro de uma partição e contém metadados adicionais, como estatísticas de colunas e versões. Ajudando na otimização de leitura e filtragem de dados.</p>
+    <p align="justify">Por fim, esse arquivo lista os arquivos de dados dentro de uma partição e contém metadados adicionais, como estatísticas de colunas e versões. Dessa forma, ajudando na otimização de leitura e filtragem de dados.</p>
   </ul>
   <li>Dados</li>
   <p align="justify">A última camada é onde estão os dados em si, em um Open File Format</p>
